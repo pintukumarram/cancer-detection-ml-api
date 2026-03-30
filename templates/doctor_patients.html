@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients | KancerCare</title>
+    <link rel="stylesheet" href="/static/css/profile.css">
+</head>
+<body>
+    <main class="profile-page">
+        <section class="profile-shell">
+            <div class="profile-header">
+                <div>
+                    <p class="profile-kicker">Doctor Access</p>
+                    <h1>Patient Directory</h1>
+                    <p class="profile-subtitle">Read patient prediction history and open profiles to leave remarks or prescriptions.</p>
+                </div>
+                <div class="profile-actions">
+                    <a href="/profile" class="profile-link">Dashboard</a>
+                    <a href="/logout" class="profile-link profile-link-accent">Logout</a>
+                </div>
+            </div>
+
+            <div class="patient-grid">
+                {% for patient in patients %}
+                <article class="patient-card">
+                    <h2>{{ patient.username }}</h2>
+                    <p>{{ patient.email }}</p>
+                    <a href="{{ url_for('common_routes.patient_profile', patient_id=patient.id) }}" class="profile-link profile-link-accent">Open Profile</a>
+                </article>
+                {% else %}
+                <div class="summary-card">
+                    <p>No patient accounts found yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

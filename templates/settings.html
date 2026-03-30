@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | KancerCare</title>
+    <link rel="stylesheet" href="/static/css/profile.css">
+</head>
+<body>
+    <main class="profile-page">
+        <section class="profile-shell">
+            <div class="profile-header">
+                <div>
+                    <p class="profile-kicker">Account Settings</p>
+                    <h1>Update Your Details</h1>
+                    <p class="profile-subtitle">Manage your profile information and password here.</p>
+                </div>
+                <div class="profile-actions">
+                    <a href="/profile" class="profile-link">Profile</a>
+                    <a href="/logout" class="profile-link profile-link-accent">Logout</a>
+                </div>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="flash-stack">
+                  {% for message in messages %}
+                    <div class="flash-item">{{ message }}</div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <section class="summary-card">
+                <form class="note-form" method="POST" action="{{ url_for('common_routes.settings') }}">
+                    <label for="username">Full Name</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                    {% if user.is_doctor %}
+                    <label for="specialization">Specialization</label>
+                    <input type="text" id="specialization" name="specialization" value="{{ user.specialization or '' }}">
+                    {% endif %}
+
+                    <label for="password">New Password</label>
+                    <input type="password" id="password" name="password" placeholder="Leave blank to keep current password">
+
+                    <label for="confirm_password">Confirm New Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Repeat new password">
+
+                    <button type="submit" class="profile-link profile-link-accent note-submit">Save Changes</button>
+                </form>
+            </section>
+        </section>
+    </main>
+</body>
+</html>

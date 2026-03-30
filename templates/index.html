@@ -3,304 +3,364 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-adsense-account" content="ca-pub-4564137245491512">
+    <meta name="google-adsense-account" content="ca-pub-4564137245491512" />
     <title>KancerCare</title>
     <link rel="stylesheet" href="/static/css/styles.css" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4564137245491512"
-     crossorigin="anonymous"></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4564137245491512"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
-    <!-- AOS Library -->
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    
-    <!-- Scroll Progress Bar -->
-<div id="scroll-progress"></div>
-
-    <canvas id="backgroundCanvas"></canvas>
-    <div class="atom-container">
-      <div class="nucleus"></div>
-      <div class="orbit orbit-1"><div class="electron"></div></div>
-      <div class="orbit orbit-2"><div class="electron"></div></div>
-      <div class="orbit orbit-3"><div class="electron"></div></div>
+    <div id="scroll-progress"></div>
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+      <div class="page-loader-card" role="status" aria-live="polite">
+        <div class="page-loader-spinner"></div>
+        <h3>Warming up AI Models...</h3>
+        <p id="page-loader-message">
+          Please wait while KancerCare prepares the clinical prediction workspace.
+        </p>
+      </div>
     </div>
 
+    <canvas id="backgroundCanvas"></canvas>
     <div id="particles-js"></div>
 
-    <!-- Navigation Bar -->
     <header>
       <nav class="navbar">
+        <a href="/" class="site-mark">
+          <span class="site-mark-icon" aria-hidden="true">
+            <i class="fas fa-heartbeat"></i>
+          </span>
+          <span class="site-mark-text">
+            <strong>KancerCare</strong>
+            <small>Clinical Tracking Platform</small>
+          </span>
+        </a>
         <ul class="nav-links">
           <li><a href="#home" class="nav-item">Home</a></li>
           <li><a href="#about" class="nav-item">About</a></li>
           <li><a href="#types" class="nav-item">Cancer</a></li>
           <li><a href="#contact" class="nav-item">Contact</a></li>
           <li><a href="#team" class="nav-item">Our Team</a></li>
-          <li><a href="#login-register" class="nav-item">Sign-In</a></li>
+          {% if current_user.is_authenticated %}
+            {% if current_user.is_doctor %}
+            <li><a href="/patients" class="nav-item loading-link" data-loading-message="Opening doctor dashboard and patient review tools...">Doctor Dashboard</a></li>
+            <li class="nav-status-item">
+              <a href="/patients" class="nav-status-pill loading-link" data-loading-message="Opening review queue and patient updates...">
+                <span class="nav-status-icon"><i class="fas fa-bell"></i></span>
+                <span class="nav-status-copy">
+                  <strong>Review Queue</strong>
+                  <small>Patient updates ready</small>
+                </span>
+              </a>
+            </li>
+            {% else %}
+            <li class="nav-status-item">
+              <a href="/profile" class="nav-status-pill loading-link" data-loading-message="Opening your care profile and doctor updates...">
+                <span class="nav-status-icon"><i class="fas fa-user-md"></i></span>
+                <span class="nav-status-copy">
+                  <strong>Assigned Doctor</strong>
+                  <small>Care tracking active</small>
+                </span>
+              </a>
+            </li>
+            {% endif %}
+            <li class="account-menu-item">
+              <details class="account-menu">
+                <summary class="account-toggle">
+                  <span class="account-avatar"><i class="fas fa-user-circle"></i></span>
+                  <span class="account-label">
+                    <strong>{{ current_user.username }}</strong>
+                    <small>{{ current_user.role.replace('_', ' ')|title }}</small>
+                  </span>
+                  <i class="fas fa-chevron-down account-caret"></i>
+                </summary>
+                <div class="account-dropdown">
+                  {% if not current_user.is_doctor %}
+                  <a href="/history" class="account-dropdown-link loading-link" data-loading-message="Opening your saved prediction history...">
+                    <i class="fas fa-history"></i>
+                    <span>My History</span>
+                  </a>
+                  {% endif %}
+                  <a href="/profile" class="account-dropdown-link loading-link" data-loading-message="Opening your KancerCare profile...">
+                    <i class="fas fa-id-badge"></i>
+                    <span>Profile</span>
+                  </a>
+                  <a href="/settings" class="account-dropdown-link loading-link" data-loading-message="Loading account settings...">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                  </a>
+                  <a href="/logout" class="account-dropdown-link account-dropdown-link-danger loading-link" data-loading-message="Signing you out securely...">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                  </a>
+                </div>
+              </details>
+            </li>
+          {% else %}
+            <li><a href="#login-register" class="nav-item">Sign-In</a></li>
+          {% endif %}
         </ul>
         <button id="themeToggle" class="theme-toggle">
-  <i class="fas fa-moon"></i>
-</button>
-
+          <i class="fas fa-moon"></i>
+        </button>
       </nav>
     </header>
 
-    <!-- Home Section -->
     <section id="home" class="home-section">
       <div class="carousel">
         <div class="carousel-track">
           <div class="carousel-slide">
             <img src="static/images/breast_cancer.png" alt="Breast Cancer" />
             <div class="caption">
-              <a href="/breast" class="btn">Breast Cancer</a>
+              <a href="/breast" class="btn loading-link" data-loading-message="Warming up the Breast Cancer prediction module...">Breast Cancer</a>
             </div>
           </div>
           <div class="carousel-slide">
             <img src="static/images/lungimg.png" alt="Lung Cancer" />
             <div class="caption">
-              <a href="/lung" class="btn">Lung Cancer</a>
+              <a href="/lung" class="btn loading-link" data-loading-message="Warming up the Lung Cancer prediction module...">Lung Cancer</a>
             </div>
           </div>
           <div class="carousel-slide">
-            <img
-              src="static/images/prostate_cancer.png"
-              alt="Prostate Cancer"
-            />
+            <img src="static/images/prostate_cancer.png" alt="Prostate Cancer" />
             <div class="caption">
-              <a href="/prostate" class="btn">Prostate Cancer</a>
+              <a href="/prostate" class="btn loading-link" data-loading-message="Warming up the Prostate Cancer prediction module...">Prostate Cancer</a>
             </div>
           </div>
           <div class="carousel-slide">
-            <img
-              src="static/images/colorectal_cancer.png"
-              alt="Colorectal Cancer"
-            />
+            <img src="static/images/colorectal_cancer.png" alt="Colorectal Cancer" />
             <div class="caption">
-              <a href="/colorectal" class="btn">Colorectal Cancer</a>
+              <a href="/colorectal" class="btn loading-link" data-loading-message="Warming up the Colorectal Cancer prediction module...">Colorectal Cancer</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-   <!-- About Section -->
-<section id="about" class="section about">
-  <div class="about-container">
-    
-    <div class="about-text-wrapper">
-      <h2 class="about-title">ABOUT US</h2>
-      <p class="about-text">
-        Welcome to <strong>Kancer~Care</strong>, a next-generation cancer
-        prediction and monitoring platform built with advanced machine
-        learning models and real-time data analysis. We aim to empower
-        patients, doctors, and healthcare providers with precise, early-stage
-        diagnostics to fight cancer effectively.
-      </p>
-      <p class="about-text">
-        Our mission is to make cutting-edge cancer prediction accessible to
-        everyone. Through interactive dashboards, stage-wise analytics, and
-        progress tracking tools, we help users stay informed and take control
-        of their health journey.
-      </p>
-      <p class="about-text">
-        Whether you're monitoring symptoms, seeking second opinions, or
-        exploring treatment options, Kancer~Care brings the power of data and
-        intelligence to your fingertips — all with a beautifully crafted user
-        experience.
-      </p>
-    </div>
-    <div class="mission-container">
-      <div class="mission-title-wrapper">
-        <h2 class="mission-title">OUR MISSION</h2>
-        <p class="mission-subtitle">Empowering Healthcare with AI & Precision</p>
-      </div>
-  
-      <div class="mission-card-wrapper">
-        <div class="mission-flip-card">
-          <div class="mission-flip-inner">
-            <div class="mission-front">
-              <img src="static/images/mission.jpg" alt="Mission Image" />
-            </div>
-            <div class="mission-back">
-              <h3>Our Aim</h3>
-              <p>
-                To revolutionize cancer care with real-time, AI-driven diagnostics,
-                ensuring early detection, better treatment planning, and hope for
-                every patient. Together, we’re making health smarter, stronger, and more accessible.
-              </p>
+    <section id="about" class="section about">
+      <div class="about-container">
+        <div class="about-text-wrapper">
+          <span class="section-kicker">About KancerCare</span>
+          <h2 class="about-title">A clearer digital experience for AI-assisted cancer screening</h2>
+          <p class="about-text">
+            KancerCare is a machine learning based web platform built to make
+            cancer prediction tools easier to access, understand, and use. The
+            goal is to present complex prediction workflows in a structured and
+            approachable way for learners, teams, and future healthcare-facing use
+            cases.
+          </p>
+          <p class="about-text">
+            The platform currently focuses on bringing multiple prediction modules
+            into one place, with attention to simple navigation, guided input
+            forms, and result pages that are easier to review than raw model
+            outputs.
+          </p>
+          <p class="about-text">
+            As the platform grows, KancerCare is designed to support better user
+            journeys around account-based history, doctor review, and more
+            responsible presentation of predictive information.
+          </p>
+        </div>
+
+        <div class="mission-container">
+          <div class="mission-panel">
+            <span class="section-kicker">Our Mission</span>
+            <h3 class="mission-title">Practical, accessible, and responsible prediction support</h3>
+            <p class="mission-subtitle">
+              We aim to combine machine learning and thoughtful design so early
+              screening tools feel more understandable, reliable, and usable in one
+              focused interface.
+            </p>
+            <div class="mission-points">
+              <div class="mission-point">
+                <i class="fas fa-brain"></i>
+                <span>Support early-stage screening workflows with structured and readable model output.</span>
+              </div>
+              <div class="mission-point">
+                <i class="fas fa-user-md"></i>
+                <span>Create smoother collaboration between patients, doctors, and lab experts.</span>
+              </div>
+              <div class="mission-point">
+                <i class="fas fa-shield-alt"></i>
+                <span>Encourage responsible use by treating predictions as support, not diagnosis.</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-   
-    
-  </div>
-  
-</section>
+    </section>
 
-<!-- Our Mission Section 
-<section id="mission" class="section mission">
- 
-</section>
--->
-
-
-    <!-- Types of Cancer Section -->
     <section id="types" class="section types">
       <h2>PREDICTION</h2>
       <div class="card-container">
         <div class="card">
+          <span class="card-badge">Model v2.1</span>
           <img src="static/images/breast_cancer.png" alt="Breast Cancer" />
           <div class="card-content">
             <h3>Breast Cancer</h3>
             <p>Predict and analyze breast cancer stages effectively.</p>
-            <a href="/breast" class="btn">Explore</a>
+            <a href="/breast" class="btn loading-link" data-loading-message="Warming up the Breast Cancer prediction module...">Explore</a>
           </div>
         </div>
 
         <div class="card">
+          <span class="card-badge">Model v2.1</span>
           <img src="static/images/lungimg.png" alt="Lung Cancer" />
           <div class="card-content">
             <h3>Lung Cancer</h3>
             <p>Advanced tools for lung cancer detection and prediction.</p>
-            <a href="/lung" class="btn">Explore</a>
+            <a href="/lung" class="btn loading-link" data-loading-message="Warming up the Lung Cancer prediction module...">Explore</a>
           </div>
         </div>
 
         <div class="card">
+          <span class="card-badge">Model v2.1</span>
           <img src="static/images/prostate_cancer.png" alt="Prostate Cancer" />
           <div class="card-content">
             <h3>Prostate Cancer</h3>
             <p>Analyze and predict prostate cancer progression.</p>
-            <a href="/prostate" class="btn">Explore</a>
+            <a href="/prostate" class="btn loading-link" data-loading-message="Warming up the Prostate Cancer prediction module...">Explore</a>
           </div>
         </div>
 
         <div class="card">
-          <img
-            src="static/images/colorectal_cancer.png"
-            alt="Colorectal Cancer"
-          />
+          <span class="card-badge">Model v2.1</span>
+          <img src="static/images/colorectal_cancer.png" alt="Colorectal Cancer" />
           <div class="card-content">
             <h3>Colorectal Cancer</h3>
             <p>Efficiently detect and manage colorectal cancer.</p>
-            <a href="/colorectal" class="btn">Explore</a>
+            <a href="/colorectal" class="btn loading-link" data-loading-message="Warming up the Colorectal Cancer prediction module...">Explore</a>
           </div>
         </div>
-
-        <!-- Beep sound -->
-        <audio id="beep-sound" src="static/sounds/woosh-effect.mp3"></audio>
       </div>
     </section>
 
-  <!-- Our Team Section -->
-<section id="team" class="section team-section">
-  <h2 class="section-title">OUR TEAM</h2>
-  <div class="team-container">
-    
-    <!-- Team Member 1 -->
-    <div class="flip-container" data-aos="flip-left">
-      <div class="flipper">
-        <div class="team-card front">
-          <img src="static/images/aditi_01.jpeg" alt="Aditi Kumari" class="team-img" />
-          <h3 class="team-name">Aditi Kumari</h3>
-          <p class="team-role">Full Stack Developer</p>
+    <section id="team" class="section team-section">
+      <h2 class="section-title">OUR TEAM</h2>
+      <div class="team-container">
+        <div class="flip-container" data-aos="flip-left">
+          <div class="flipper">
+            <div class="team-card front">
+              <img src="static/images/aditi_01.jpeg" alt="Aditi Kumari" class="team-img" />
+              <h3 class="team-name">Aditi Kumari</h3>
+              <p class="team-role">Full Stack Developer</p>
+            </div>
+            <div class="team-card back">
+              <p class="team-description">Passionate about building smart and accessible AI-powered healthcare solutions using Python, Flask, and ML.</p>
+              <a href="https://github.com/Aditi-keshri" class="github-link" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="team-card back">
-          <p class="team-description">Passionate about building smart and accessible AI-powered healthcare solutions using Python, Flask, and ML.</p>
-          <a href="https://github.com/Aditi-keshri" class="github-link" target="_blank">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-        </div>
-      </div>
-    </div>
 
-    <!-- Team Member 2 -->
-    <div class="flip-container" data-aos="flip-left">
-      <div class="flipper">
-        <div class="team-card front">
-          <img src="static/images/pintu.jpeg" alt="pintu kumar ram" class="team-img" />
-          <h3 class="team-name">PINTU KUMAR RAM</h3>
-          <p class="team-role">AI/ML</p>
+        <div class="flip-container" data-aos="flip-left">
+          <div class="flipper">
+            <div class="team-card front">
+              <img src="static/images/pintu.jpeg" alt="Pintu Kumar Ram" class="team-img" />
+              <h3 class="team-name">Pintu Kumar Ram</h3>
+              <p class="team-role">AI/ML</p>
+            </div>
+            <div class="team-card back">
+              <p class="team-description">Focused on deep learning algorithms and cancer stage prediction models.</p>
+              <a href="https://github.com/pintukumarram" class="github-link" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="team-card back">
-          <p class="team-description">Focused on deep learning algorithms and cancer stage prediction models.</p>
-          <a href="https://github.com/pintukumarram" class="github-link" target="_blank">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-        </div>
-      </div>
-    </div>
 
-    <!-- Team Member 3 -->
-    <div class="flip-container" data-aos="flip-left">
-      <div class="flipper">
-        <div class="team-card front">
-          <img src="static/images/tuhin_01.png" alt="Tuhin Kar" class="team-img" />
-          <h3 class="team-name">Tuhin Kar</h3>
-          <p class="team-role">Data Science</p>
+        <div class="flip-container" data-aos="flip-left">
+          <div class="flipper">
+            <div class="team-card front">
+              <img src="static/images/tuhin_01.png" alt="Tuhin Kar" class="team-img" />
+              <h3 class="team-name">Tuhin Kar</h3>
+              <p class="team-role">Data Science</p>
+            </div>
+            <div class="team-card back">
+              <p class="team-description">Focused on deep learning algorithms and cancer stage prediction models.</p>
+              <a href="https://github.com/johndoe" class="github-link" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="team-card back">
-          <p class="team-description">Focused on deep learning algorithms and cancer stage prediction models.</p>
-          <a href="https://github.com/johndoe" class="github-link" target="_blank">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-        </div>
-      </div>
-    </div>
 
-    <!-- Team Member 4 -->
-    <div class="flip-container" data-aos="flip-left">
-      <div class="flipper">
-        <div class="team-card front">
-          <img src="static/images/bibek.png" alt="Bibek Malakar" class="team-img" />
-          <h3 class="team-name">Bibek Malakar/h3>
-          <p class="team-role">Data Analyst</p>
-        </div>
-        <div class="team-card back">
-          <p class="team-description">Focused on deep learning algorithms and cancer stage prediction models.</p>
-          <a href="https://github.com/johndoe" class="github-link" target="_blank">
-            <i class="fab fa-github"></i> GitHub
-          </a>
+        <div class="flip-container" data-aos="flip-left">
+          <div class="flipper">
+            <div class="team-card front">
+              <img src="static/images/bibek.png" alt="Bibek Malakar" class="team-img" />
+              <h3 class="team-name">Bibek Malakar</h3>
+              <p class="team-role">Data Analyst</p>
+            </div>
+            <div class="team-card back">
+              <p class="team-description">Focused on data analysis and model-support workflows for prediction systems.</p>
+              <a href="https://github.com/johndoe" class="github-link" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-  </div>
-</section>
-
-
-
-    <!-- Contact Section -->
-
-    <section id="contact">
-      <div class="contact-background">
-        <div class="cube"></div>
-        <div class="cube"></div>
-        <div class="cube"></div>
-      </div>
-
+    <section id="contact" class="section contact-section">
       <div class="contact-container">
         <div class="contact-card">
-          <h2>Contact Us</h2>
-          <p>Have a question or feedback? We’d love to hear from you!</p>
-          <form action="https://formspree.io/f/xyzwggkd" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required />
+          <div class="contact-copy">
+            <span class="section-kicker">Contact Us</span>
+            <h2>Get in touch with the KancerCare team</h2>
+            <p>
+              For questions, feedback, or collaboration inquiries, send a
+              message through the form. We review submissions through the
+              project contact channel.
+            </p>
+            <div class="contact-meta">
+              <div class="contact-meta-item">
+                <i class="fas fa-envelope"></i>
+                <span>General questions and platform feedback</span>
+              </div>
+              <div class="contact-meta-item">
+                <i class="fas fa-users"></i>
+                <span>Team, academic, and collaboration communication</span>
+              </div>
+              <div class="contact-meta-item">
+                <i class="fas fa-notes-medical"></i>
+                <span>Do not use this form for urgent medical decisions or emergencies</span>
+              </div>
+            </div>
+          </div>
+
+          <form action="https://formspree.io/f/xyzwggkd" method="POST" class="contact-form-clean" data-loading-message="Sending your message securely...">
+            <label for="contact-name">Full Name</label>
+            <input type="text" id="contact-name" name="name" placeholder="Enter your name" required />
+
+            <label for="contact-email">Email Address</label>
             <input
               type="email"
+              id="contact-email"
               name="_replyto"
-              placeholder="Your Email"
+              placeholder="name@example.com"
               required
             />
+
+            <label for="contact-message">Message</label>
             <textarea
+              id="contact-message"
               name="message"
-              placeholder="Your Message"
+              placeholder="Write your message here"
               rows="5"
               required
             ></textarea>
@@ -311,49 +371,252 @@
     </section>
 
     <section id="login-register" class="login-register-section">
-  <h2 class="section-title">Login / Register</h2>
-  <div class="form-container">
-    <!-- Login Form -->
-    <div class="glass-form">
-      <h3>Login</h3>
-      <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username or Email" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">Login</button>
-      </form>
-    </div>
-
-    <!-- Register Form -->
-    <div class="glass-form">
-      <h3>Register</h3>
-      <form action="/register" method="POST">
-        <input type="text" name="username" placeholder="Full Name" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required />
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-    <footer>
-      <div class="footer-wrapper">
-        <h3>Bridging Medicine and Technology</h3>
-        <p class="footer-text">
-          Innovating the future of healthcare through technology. <br />
-          Join us on our mission to create a healthier tomorrow.
-        </p>
-        <div class="footer-logo"><span>MedTech</span> Solutions</div>
-        <div class="medical-tech-icon">
-          <img src="static/images/esthethoscope.jpg" alt="Medical Icon" />
-          <img src="static/images/tech-icon.jpg" alt="Technology Icon" />
+      {% if current_user.is_authenticated %}
+      <div class="auth-showcase auth-showcase-loggedin">
+        <div class="auth-intro" data-aos="fade-right">
+          <span class="auth-eyebrow">Account Ready</span>
+          <h2 class="auth-title">Welcome back, {{ current_user.username }}</h2>
+          <p class="auth-copy">
+            Your account is active and your navigation is now tailored to your role.
+            Use the shortcuts on the right to move directly into your workspace.
+          </p>
+          <div class="auth-benefits">
+            <div class="auth-benefit">
+              <i class="fas fa-id-badge"></i>
+              <div>
+                <h3>Current role</h3>
+                <p>{{ current_user.role.replace('_', ' ')|title }}{% if current_user.specialization %} | {{ current_user.specialization }}{% endif %}</p>
+              </div>
+            </div>
+            <div class="auth-benefit">
+              <i class="fas fa-user-cog"></i>
+              <div>
+                <h3>Profile and settings</h3>
+                <p>Review your account details, prediction access, and update profile information anytime.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="social-links">
-          <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+
+        <div class="auth-panel" data-aos="fade-left">
+          <div class="logged-in-actions">
+            <a href="/profile" class="logged-action-card loading-link" data-loading-message="Opening your KancerCare profile...">
+              <i class="fas fa-user-circle"></i>
+              <h3>Open Profile</h3>
+              <p>View your personalized dashboard and account details.</p>
+            </a>
+
+            <a href="/settings" class="logged-action-card loading-link" data-loading-message="Loading account settings...">
+              <i class="fas fa-sliders-h"></i>
+              <h3>Settings</h3>
+              <p>Update your name, email, specialization, or password.</p>
+            </a>
+
+            {% if current_user.is_doctor %}
+            <a href="/patients" class="logged-action-card logged-action-primary loading-link" data-loading-message="Opening patient review tools...">
+              <i class="fas fa-user-md"></i>
+              <h3>View Patients</h3>
+              <p>Read patient prediction histories and submit remarks, suggestions, and prescriptions.</p>
+            </a>
+            {% else %}
+            <a href="/history" class="logged-action-card logged-action-primary loading-link" data-loading-message="Opening your saved prediction history...">
+              <i class="fas fa-history"></i>
+              <h3>Prediction History</h3>
+              <p>Open your saved prediction reports and review doctor or lab expert notes.</p>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="auth-showcase">
+        <div class="auth-intro" data-aos="fade-right">
+          <span class="auth-eyebrow">Secure Patient Access</span>
+          <h2 class="auth-title">Professional account access for future care journeys</h2>
+          <p class="auth-copy">
+            Create an account to prepare for saved history, personalized tracking,
+            and smoother access to prediction tools as the platform grows.
+          </p>
+          <div class="auth-benefits">
+            <div class="auth-benefit">
+              <i class="fas fa-shield-alt"></i>
+              <div>
+                <h3>Privacy-first flow</h3>
+                <p>Clear forms, better validation, and a cleaner sign-in experience.</p>
+              </div>
+            </div>
+            <div class="auth-benefit">
+              <i class="fas fa-notes-medical"></i>
+              <div>
+                <h3>Built for continuity</h3>
+                <p>Prepared for prediction history and patient-specific follow-up features.</p>
+              </div>
+            </div>
+            <div class="auth-benefit">
+              <i class="fas fa-user-check"></i>
+              <div>
+                <h3>Simple onboarding</h3>
+                <p>Minimal fields, readable labels, and a more trustworthy interface.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-panel" data-aos="fade-left">
+          <div class="auth-cards">
+            <article class="auth-card auth-card-login">
+              <div class="auth-card-header">
+                <span class="auth-icon"><i class="fas fa-sign-in-alt"></i></span>
+                <div>
+                  <h3>Login</h3>
+                  <p>Access your account securely</p>
+                </div>
+              </div>
+              <form action="/login" method="POST" class="auth-form-grid" data-loading-message="Signing you in and preparing your workspace...">
+                <label for="home-login-email">Email address</label>
+                <input type="email" id="home-login-email" name="email" placeholder="name@example.com" required />
+
+                <label for="home-login-password">Password</label>
+                <input type="password" id="home-login-password" name="password" placeholder="Enter your password" required />
+
+                <button type="submit" class="auth-submit">Sign In</button>
+              </form>
+            </article>
+
+            <article class="auth-card auth-card-register">
+              <div class="auth-card-header">
+                <span class="auth-icon"><i class="fas fa-user-plus"></i></span>
+                <div>
+                  <h3>Register</h3>
+                  <p>Create a new KancerCare account</p>
+                </div>
+              </div>
+              <form action="/register" method="POST" class="auth-form-grid" data-loading-message="Creating your account and setting up your workspace...">
+                <label for="home-register-name">Full name</label>
+                <input type="text" id="home-register-name" name="username" placeholder="Enter your full name" required />
+
+                <label for="home-register-email">Email address</label>
+                <input type="email" id="home-register-email" name="email" placeholder="name@example.com" required />
+
+                <label for="home-register-role">Role</label>
+                <select id="home-register-role" name="role" required>
+                  <option value="patient">Patient</option>
+                  <option value="doctor">Doctor</option>
+                  <option value="lab_expert">Lab Expert</option>
+                </select>
+
+                <label for="home-register-specialization">Specialization</label>
+                <input
+                  type="text"
+                  id="home-register-specialization"
+                  name="specialization"
+                  placeholder="Optional for doctors and lab experts"
+                />
+
+                <label for="home-register-password">Password</label>
+                <input type="password" id="home-register-password" name="password" placeholder="Create a strong password" required />
+
+                <label for="home-register-confirm">Confirm password</label>
+                <input type="password" id="home-register-confirm" name="confirm_password" placeholder="Re-enter your password" required />
+
+                <button type="submit" class="auth-submit">Create Account</button>
+              </form>
+            </article>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-shell">
+        <div class="footer-grid">
+          <div class="footer-column footer-brand">
+            <div class="footer-badge">KancerCare</div>
+            <h3>AI-assisted cancer prediction designed with accessibility and care in mind</h3>
+            <p>
+              KancerCare brings together machine learning, digital health design,
+              and user-friendly workflows to make early screening tools easier to
+              understand and navigate.
+            </p>
+            <div class="footer-mini-note">
+              This platform is an educational and prototype healthcare interface.
+              It should not replace licensed medical advice, emergency care, or
+              treatment planning by qualified professionals.
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h4>Explore</h4>
+            <ul class="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#types">Prediction Modules</a></li>
+              <li><a href="#team">Our Team</a></li>
+              <li><a href="#contact">Contact</a></li>
+              {% if current_user.is_authenticated %}
+              <li><a href="/profile">Profile</a></li>
+              {% else %}
+              <li><a href="#login-register">Login / Register</a></li>
+              {% endif %}
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Policy & Terms</h4>
+            <ul class="footer-links footer-links-detail">
+              <li>
+                <strong>Privacy Policy</strong>
+                <span>User-submitted details should be treated carefully and used only for intended platform purposes.</span>
+              </li>
+              <li>
+                <strong>Terms & Conditions</strong>
+                <span>Users are expected to submit accurate information and interpret outputs responsibly.</span>
+              </li>
+              <li>
+                <strong>Medical Disclaimer</strong>
+                <span>Predictions are informational only and require clinical review before any real-world decision.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Details & Social</h4>
+            <div class="footer-contact-list">
+              <div class="footer-contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>Use the contact section above to send questions, feedback, or collaboration requests.</span>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-user-shield"></i>
+                <span>Account access is prepared for secure history and future patient-facing features.</span>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-heartbeat"></i>
+                <span>Built around guided prediction workflows for breast, lung, prostate, and colorectal screening modules.</span>
+              </div>
+            </div>
+
+            <div class="footer-socials">
+              <a href="#contact" aria-label="Contact section"><i class="fas fa-paper-plane"></i></a>
+              <a href="#team" aria-label="Team section"><i class="fas fa-users"></i></a>
+              <a href="#about" aria-label="About section"><i class="fas fa-info-circle"></i></a>
+              <a href="#types" aria-label="Prediction modules"><i class="fas fa-microscope"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 KancerCare. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#about">About</a>
+            <a href="#contact">Support</a>
+            {% if current_user.is_authenticated %}
+            <a href="/profile">Access Terms</a>
+            {% else %}
+            <a href="#login-register">Access Terms</a>
+            {% endif %}
+          </div>
         </div>
       </div>
     </footer>
@@ -385,7 +648,7 @@
         for (let p of particles) {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, false);
-          ctx.fillStyle = `rgba(0, 188, 212, 0.6)`; // Teal glow
+          ctx.fillStyle = "rgba(0, 188, 212, 0.6)";
           ctx.shadowBlur = 10;
           ctx.shadowColor = "#00bcd4";
           ctx.fill();
@@ -408,46 +671,41 @@
         canvas.height = window.innerHeight;
       });
     </script>
-    <!-- AOS Script -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 1200, // animation duration
-    once: true,     // whether animation should happen only once
-  });
-</script>
 
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1200,
+        once: true,
+      });
+    </script>
 
-<script>
-  const toggle = document.getElementById("themeToggle");
-  const body = document.body;
-  const icon = toggle.querySelector("i");
+    <script>
+      const toggle = document.getElementById("themeToggle");
+      const body = document.body;
+      const icon = toggle.querySelector("i");
 
-  // Check saved theme
-  if (localStorage.getItem("theme") === "dark") {
-    body.classList.add("dark-mode");
-    icon.classList.replace("fa-moon", "fa-sun");
-  }
+      if (localStorage.getItem("theme") === "dark") {
+        body.classList.add("dark-mode");
+        icon.classList.replace("fa-moon", "fa-sun");
+      }
 
-  toggle.addEventListener("click", () => {
-    body.classList.toggle("dark-mode");
-    const isDark = body.classList.contains("dark-mode");
-    icon.classList.toggle("fa-moon", !isDark);
-    icon.classList.toggle("fa-sun", isDark);
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
-</script>
+      toggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        const isDark = body.classList.contains("dark-mode");
+        icon.classList.toggle("fa-moon", !isDark);
+        icon.classList.toggle("fa-sun", isDark);
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+      });
+    </script>
 
-
-<script>
-  // Scroll progress indicator
-  window.addEventListener("scroll", function () {
-    const scrollProgress = document.getElementById("scroll-progress");
-    const totalHeight = document.body.scrollHeight - window.innerHeight;
-    const progress = (window.scrollY / totalHeight) * 100;
-    scrollProgress.style.width = progress + "%";
-  });
-</script>
-
+    <script>
+      window.addEventListener("scroll", function () {
+        const scrollProgress = document.getElementById("scroll-progress");
+        const totalHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / totalHeight) * 100;
+        scrollProgress.style.width = progress + "%";
+      });
+    </script>
   </body>
 </html>

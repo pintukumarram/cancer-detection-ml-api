@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | KancerCare</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <style>
+      .auth-page {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, #041827, #0d4860);
+      }
+
+      .auth-card {
+        width: min(460px, 100%);
+        padding: 2rem;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(12px);
+        color: #fff;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      }
+
+      .auth-card h1,
+      .auth-card p {
+        margin-bottom: 1rem;
+      }
+
+      .auth-form label {
+        display: block;
+        margin: 0.75rem 0 0.35rem;
+      }
+
+      .auth-form input {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border: 0;
+        border-radius: 12px;
+        box-sizing: border-box;
+      }
+
+      .flash-list {
+        margin: 0 0 1rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .flash-list li {
+        margin-bottom: 0.75rem;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        background: rgba(255, 99, 71, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .auth-form button,
+      .auth-link {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.85rem 1.25rem;
+        border: 0;
+        border-radius: 999px;
+        background: #00bcd4;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="auth-page">
+      <section class="auth-card">
+        <h1>Login</h1>
+        <p>Sign in to access future account-based features such as history.</p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="flash-list">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        <form class="auth-form" action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+
+          <button type="submit">Login</button>
+        </form>
+        <a class="auth-link" href="/register">Create an account</a>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from flask_login import login_required
 import joblib
 import numpy as np
 
@@ -10,11 +11,13 @@ colorectal_routes = Blueprint('colorectal_routes ', __name__)
 # prostate_stage_model = joblib.load("models/prostate/prostate_stage_prediction_model.pkl")
 
 @colorectal_routes.route("/")
+@login_required
 def prostate_home():
     """Render the prostate cancer prediction home page."""
     return render_template("colorectal.html")
 
 @colorectal_routes.route("/predict", methods=["POST"])
+@login_required
 def predict_lung():
     """Handle prostate cancer and stage predictions."""
     try:
