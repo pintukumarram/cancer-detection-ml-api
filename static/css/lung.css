@@ -1,100 +1,253 @@
-/* Lung Cancer Page */
-
-/* General Styling */
 body {
-  background: radial-gradient(circle, #1a1a1a, #0e0e0e);
-  color: #ddd;
-  font-family: "Arial", sans-serif;
   margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  animation: background-fade 6s infinite alternate;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #e9f1f5;
+  background:
+    radial-gradient(circle at top, rgba(206, 103, 78, 0.22), transparent 24%),
+    linear-gradient(180deg, #0b1016 0%, #121821 52%, #0b1118 100%);
 }
+
+.lung-page-shell {
+  min-height: 100vh;
+  padding: 48px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lung-container {
-  width: 90%;
-  max-width: 700px;
-  background: linear-gradient(145deg, #222, #111);
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-  animation: fade-in 0.8s ease-in-out;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  width: min(920px, 100%);
+  padding: 36px;
+  border-radius: 28px;
+  background: rgba(11, 18, 27, 0.88);
+  border: 1px solid rgba(239, 143, 122, 0.16);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+}
+
+.lung-header {
+  max-width: 720px;
+  margin-bottom: 28px;
+}
+
+.lung-kicker {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 99, 71, 0.12);
+  border: 1px solid rgba(255, 99, 71, 0.2);
+  color: #ffb7aa;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .lung-header h1 {
-  font-size: 2rem;
-  color: #ff6347;
-  text-align: center;
-  margin-bottom: 0.5rem;
+  margin: 1rem 0 0.8rem;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 1.08;
+  color: #f7fbff;
 }
 
 .lung-header p {
-  text-align: center;
-  color: #ccc;
+  margin: 0;
+  color: #b7c7cf;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.lung-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.overview-card {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.overview-card i {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 99, 71, 0.28), rgba(255, 162, 113, 0.16));
+  color: #ffb7aa;
   font-size: 1rem;
-  margin-bottom: 1.5rem;
+}
+
+.overview-card h2 {
+  margin: 0 0 0.35rem;
+  color: #f2f9fd;
+  font-size: 1rem;
+}
+
+.overview-card p {
+  margin: 0;
+  color: #9fb3bd;
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
+.lung-form-section {
+  padding: 28px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.form-section-header {
+  margin-bottom: 22px;
+}
+
+.form-section-header h2 {
+  margin: 0 0 0.4rem;
+  color: #f5fbff;
+  font-size: 1.45rem;
+}
+
+.form-section-header p {
+  margin: 0;
+  color: #a7bac4;
+  line-height: 1.7;
 }
 
 .lung-form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.lung-form .form-group {
-  margin-bottom: 1rem;
+.form-group {
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(20, 27, 36, 0.96), rgba(13, 20, 29, 0.9));
+  border: 1px solid rgba(237, 148, 123, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.lung-form .form-group label {
-  font-size: 1rem;
-  color: #ddd;
+.form-group:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 141, 114, 0.28);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+}
+
+.form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.55rem;
+  color: #edf7fc;
+  font-size: 0.98rem;
+  font-weight: 600;
 }
 
-.lung-form .form-group input {
+.form-group input {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #333;
-  border-radius: 8px;
-  background: #1b1b1b;
-  color: #fff;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(178, 197, 207, 0.14);
+  border-radius: 14px;
+  background: rgba(241, 248, 252, 0.97);
+  color: #0b1720;
+  font-size: 0.98rem;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.lung-form .form-group input:focus {
-  border-color: #ff6347;
+.form-group input::placeholder {
+  color: #758994;
+}
+
+.form-group input:focus {
   outline: none;
-  box-shadow: 0 0 8px #ff6347;
+  border-color: rgba(255, 99, 71, 0.72);
+  box-shadow: 0 0 0 4px rgba(255, 99, 71, 0.14);
+  transform: translateY(-1px);
 }
 
-.lung-form .form-actions {
+.field-hint {
+  display: block;
+  margin-top: 0.6rem;
+  color: #90a5b0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.form-actions {
+  grid-column: 1 / -1;
   display: flex;
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 8px;
 }
 
-.lung-form .submit-button {
-  background: #ff6347;
-  color: #111;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 25px;
+.submit-button {
+  min-width: 240px;
+  padding: 1rem 1.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff7f63, #e0583c);
+  color: #081018;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  box-shadow: 0 14px 28px rgba(224, 88, 60, 0.24);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 }
 
-.lung-form .submit-button i {
-  margin-right: 0.5rem;
+.submit-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 18px 34px rgba(224, 88, 60, 0.3);
 }
 
-.lung-form .submit-button:hover {
-  background: #e55640;
-  color: #fff;
-  transform: scale(1.05);
+.submit-button i {
+  margin-right: 8px;
+}
+
+@media (max-width: 920px) {
+  .lung-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .lung-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .lung-page-shell {
+    padding: 22px 14px;
+  }
+
+  .lung-container {
+    padding: 22px 18px;
+    border-radius: 22px;
+  }
+
+  .lung-form-section {
+    padding: 20px 16px;
+  }
+
+  .form-group {
+    padding: 16px;
+  }
+
+  .submit-button {
+    width: 100%;
+    min-width: 0;
+  }
 }

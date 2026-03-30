@@ -1,14 +1,28 @@
+# Python virtual environments
 env/
-venv/
 .venv/
+venv/
 
+# Python cache and compiled files
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 
-instance/
-*.db
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
 
-.vscode/
+# Environment and local config
+.env
+.env.*
+
+# IDE and editor files
 .idea/
+.vscode/
+
+# OS files
 .DS_Store
 Thumbs.db

@@ -1,0 +1,201 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #e9f1f5;
+  background:
+    radial-gradient(circle at top, rgba(14, 160, 197, 0.18), transparent 24%),
+    linear-gradient(180deg, #081018 0%, #0d1722 52%, #09111a 100%);
+}
+
+.profile-page {
+  min-height: 100vh;
+  padding: 32px 18px;
+}
+
+.profile-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px;
+  border-radius: 28px;
+  background: rgba(11, 18, 27, 0.88);
+  border: 1px solid rgba(113, 207, 224, 0.14);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.profile-kicker {
+  margin: 0 0 0.6rem;
+  color: #8cf1ff;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.profile-header h1 {
+  margin: 0 0 0.5rem;
+}
+
+.profile-subtitle {
+  margin: 0;
+  color: #a7bac4;
+  line-height: 1.7;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.profile-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #f4fbff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 0;
+  cursor: pointer;
+}
+
+.profile-link-accent {
+  background: linear-gradient(135deg, #15d4dd, #0d98ca);
+  color: #041018;
+  font-weight: 700;
+}
+
+.dashboard-grid,
+.patient-grid,
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.summary-card,
+.patient-card,
+.note-card {
+  padding: 22px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.summary-count {
+  margin: 1rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #8cf1ff;
+}
+
+.profile-inline-actions {
+  margin-top: 1rem;
+}
+
+.simple-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.history-table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+th {
+  color: #8cf1ff;
+}
+
+.note-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.note-form label {
+  font-weight: 600;
+}
+
+.note-form textarea {
+  width: 100%;
+  min-height: 90px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(241, 248, 252, 0.97);
+  color: #081018;
+  padding: 0.9rem 1rem;
+  box-sizing: border-box;
+}
+
+.note-form input {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(241, 248, 252, 0.97);
+  color: #081018;
+  padding: 0.9rem 1rem;
+  box-sizing: border-box;
+}
+
+.note-submit {
+  margin-top: 0.5rem;
+}
+
+.notes-section {
+  margin-top: 24px;
+}
+
+.note-date {
+  color: #8fa6b2;
+  font-size: 0.85rem;
+}
+
+.flash-stack {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.flash-item {
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(255, 99, 71, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+  }
+
+  .dashboard-grid,
+  .patient-grid,
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-shell {
+    padding: 22px 18px;
+  }
+}

@@ -5,41 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prostate Cancer Prediction</title>
     <link rel="stylesheet" href="/static/css/prostate.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
-    <header>
-      <h1>Prostate Cancer Prediction</h1>
-    </header>
-    <main>
-      <form action="/prostate/predict" method="POST" class="prediction-form">
-        <div class="form-group">
-          <label for="feature1">Feature 1:</label>
-          <input type="text" id="feature1" name="feature1" required />
-        </div>
-        <div class="form-group">
-          <label for="feature2">Feature 2:</label>
-          <input type="text" id="feature2" name="feature2" required />
-        </div>
-        <div class="form-group">
-            <label for="feature3">Feature 3:</label>
-            <input type="text" id="feature1" name="feature1" required />
+    <div class="prostate-page-shell">
+      <div class="prostate-container">
+        <header class="prostate-header">
+          <span class="prostate-kicker">Prostate Cancer Screening Module</span>
+          <h1>Prostate Cancer Prediction</h1>
+          <p>
+            This page is prepared for a future prostate prediction workflow.
+            The inputs below are suggested clinical features you can align with
+            your trained model later.
+          </p>
+        </header>
+
+        <section class="prostate-overview">
+          <div class="overview-card">
+            <i class="fas fa-vial"></i>
+            <div>
+              <h2>Lab and Clinical Inputs</h2>
+              <p>Use measurable values such as PSA, Gleason score, and prostate volume wherever possible.</p>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="feature4">Feature 4:</label>
-            <input type="text" id="feature1" name="feature1" required />
+          <div class="overview-card">
+            <i class="fas fa-notes-medical"></i>
+            <div>
+              <h2>Recommended Structure</h2>
+              <p>Mix numeric clinical features with a few clear binary risk indicators for a practical model input set.</p>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="feature5">Feature 5:</label>
-            <input type="text" id="feature1" name="feature1" required />
+          <div class="overview-card">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+              <h2>Planning Note</h2>
+              <p>These fields are UI placeholders for future wiring and do not yet reflect a completed backend model schema.</p>
+            </div>
           </div>
-          
-        <!-- Add more fields as needed -->
-        <button type="submit" class="btn">Predict</button>
-      </form>
-    </main>
-    <footer>
-      <p>&copy; 2025 Cancer Prediction App</p>
-    </footer>
+        </section>
+
+        <section class="prostate-form-section">
+          <div class="form-section-header">
+            <h2>Suggested Clinical Features</h2>
+            <p>These inputs are reasonable candidates if you train a prostate cancer prediction model.</p>
+          </div>
+
+          <form action="/prostate/predict" method="POST" class="prostate-form prediction-form">
+            <div class="form-group">
+              <label for="psa_level">PSA Level</label>
+              <input type="number" step="any" id="psa_level" name="psa_level" placeholder="Enter PSA level" required />
+              <small class="field-hint">Numeric value, often measured in ng/mL.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="gleason_score">Gleason Score</label>
+              <input type="number" step="1" id="gleason_score" name="gleason_score" placeholder="Enter Gleason score" required />
+              <small class="field-hint">Suggested integer score used in prostate cancer grading.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input type="number" step="1" id="age" name="age" placeholder="Enter patient age" required />
+              <small class="field-hint">Patient age can be a useful baseline risk feature.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="prostate_volume">Prostate Volume</label>
+              <input type="number" step="any" id="prostate_volume" name="prostate_volume" placeholder="Enter prostate volume" required />
+              <small class="field-hint">Numeric clinical measurement if available.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="dre_abnormal">Abnormal DRE</label>
+              <input type="number" step="1" min="0" max="1" id="dre_abnormal" name="dre_abnormal" placeholder="1 = Yes, 0 = No" required />
+              <small class="field-hint">Binary indicator for abnormal digital rectal exam findings.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="family_history">Family History</label>
+              <input type="number" step="1" min="0" max="1" id="family_history" name="family_history" placeholder="1 = Yes, 0 = No" required />
+              <small class="field-hint">Binary indicator for family history of prostate cancer.</small>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn submit-button">
+                <i class="fas fa-diagnoses"></i> Predict Cancer
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
     <script src="/static/js/scripts.js"></script>
   </body>
 </html>

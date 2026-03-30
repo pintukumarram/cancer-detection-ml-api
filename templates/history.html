@@ -7,35 +7,67 @@
     <link rel="stylesheet" href="/static/css/history.css">
 </head>
 <body>
-    <header>
-        <h1>Your Prediction History</h1>
-    </header>
+    <main class="history-page">
+        <section class="history-shell">
+            <div class="history-header">
+                <div>
+                    <p class="history-kicker">User Profile</p>
+                    <h1>Your Prediction History</h1>
+                    <p class="history-subtitle">
+                        Signed in as {{ user.username }}. Review your recent prediction results below.
+                    </p>
+                </div>
+                <div class="history-actions">
+                    <a href="/" class="history-link">Home</a>
+                    <a href="/logout" class="history-link history-link-accent">Logout</a>
+                </div>
+            </div>
 
-    <main>
         {% if history %}
-            <table>
-                <tr>
-                    <th>Cancer Type</th>
-                    <th>Input Data</th>
-                    <th>Prediction</th>
-                    <th>Date</th>
-                </tr>
-                {% for entry in history %}
-                <tr>
-                    <td>{{ entry.cancer_type }}</td>
-                    <td>{{ entry.input_data }}</td>
-                    <td>{{ entry.prediction_result }}</td>
-                    <td>{{ entry.timestamp }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+            <div class="history-table-wrap">
+                <table>
+                    <tr>
+                        <th>Cancer Type</th>
+                        <th>Input Data</th>
+                        <th>Prediction</th>
+                        <th>Date</th>
+                    </tr>
+                    {% for entry in history %}
+                    <tr>
+                        <td>{{ entry.cancer_type }}</td>
+                        <td><pre>{{ entry.input_data }}</pre></td>
+                        <td>{{ entry.prediction_result }}</td>
+                        <td>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         {% else %}
-            <p>No prediction history found.</p>
+            <div class="empty-state">
+                <h2>No prediction history yet</h2>
+                <p>Your saved prediction results will appear here after you use a prediction module.</p>
+            </div>
         {% endif %}
-    </main>
 
-    <footer>
-        <p>&copy; 2025 Cancer Prediction App. All Rights Reserved.</p>
-    </footer>
+        {% if profile_notes %}
+            <section class="notes-panel">
+                <h2>Doctor / Lab Expert Notes</h2>
+                {% for note in profile_notes %}
+                    <article class="note-entry">
+                        <h3>{{ note.doctor.username }}{% if note.doctor.specialization %} • {{ note.doctor.specialization }}{% endif %}</h3>
+                        <p><strong>Remarks:</strong> {{ note.remarks }}</p>
+                        {% if note.suggestions %}
+                        <p><strong>Suggestions:</strong> {{ note.suggestions }}</p>
+                        {% endif %}
+                        {% if note.prescription %}
+                        <p><strong>Prescription:</strong> {{ note.prescription }}</p>
+                        {% endif %}
+                        <span>{{ note.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                    </article>
+                {% endfor %}
+            </section>
+        {% endif %}
+        </section>
+    </main>
 </body>
 </html>

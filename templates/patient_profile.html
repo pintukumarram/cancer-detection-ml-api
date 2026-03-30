@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile | KancerCare</title>
+    <link rel="stylesheet" href="/static/css/profile.css">
+</head>
+<body>
+    <main class="profile-page">
+        <section class="profile-shell">
+            <div class="profile-header">
+                <div>
+                    <p class="profile-kicker">Patient Profile</p>
+                    <h1>{{ patient.username }}</h1>
+                    <p class="profile-subtitle">{{ patient.email }}</p>
+                </div>
+                <div class="profile-actions">
+                    <a href="/patients" class="profile-link">Back to Patients</a>
+                    <a href="/logout" class="profile-link profile-link-accent">Logout</a>
+                </div>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="flash-stack">
+                  {% for message in messages %}
+                    <div class="flash-item">{{ message }}</div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <div class="dashboard-grid">
+                <div class="summary-card">
+                    <h2>Prediction History</h2>
+                    {% if history %}
+                    <div class="history-table-wrap">
+                        <table>
+                            <tr>
+                                <th>Cancer Type</th>
+                                <th>Prediction</th>
+                                <th>Date</th>
+                            </tr>
+                            {% for entry in history %}
+                            <tr>
+                                <td>{{ entry.cancer_type }}</td>
+                                <td>{{ entry.prediction_result }}</td>
+                                <td>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% else %}
+                    <p>No prediction history available for this patient yet.</p>
+                    {% endif %}
+                </div>
+
+                <div class="summary-card">
+                    <h2>Add Remarks and Prescription</h2>
+                    <form class="note-form" method="POST" action="{{ url_for('common_routes.add_patient_note', patient_id=patient.id) }}">
+                        <label for="remarks">Remarks</label>
+                        <textarea id="remarks" name="remarks" rows="4" required></textarea>
+
+                        <label for="suggestions">Suggestions</label>
+                        <textarea id="suggestions" name="suggestions" rows="4"></textarea>
+
+                        <label for="prescription">Medicine Prescription</label>
+                        <textarea id="prescription" name="prescription" rows="4"></textarea>
+
+                        <button type="submit" class="profile-link profile-link-accent note-submit">Save Note</button>
+                    </form>
+                </div>
+            </div>
+
+            <section class="notes-section">
+                <h2>Doctor / Lab Expert Notes</h2>
+                {% if profile_notes %}
+                    <div class="notes-grid">
+                        {% for note in profile_notes %}
+                        <article class="note-card">
+                            <h3>{{ note.doctor.username }}{% if note.doctor.specialization %} • {{ note.doctor.specialization }}{% endif %}</h3>
+                            <p><strong>Remarks:</strong> {{ note.remarks }}</p>
+                            {% if note.suggestions %}
+                            <p><strong>Suggestions:</strong> {{ note.suggestions }}</p>
+                            {% endif %}
+                            {% if note.prescription %}
+                            <p><strong>Prescription:</strong> {{ note.prescription }}</p>
+                            {% endif %}
+                            <span class="note-date">{{ note.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                        </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No notes have been added for this patient yet.</p>
+                {% endif %}
+            </section>
+        </section>
+    </main>
+</body>
+</html>

@@ -8,92 +8,139 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <body>
-    
+    <div class="breast-page-shell">
+      <div class="breast-container">
+        <header class="breast-header">
+          <span class="breast-kicker">Breast Cancer Screening Module</span>
+          <h1>Breast Cancer Prediction</h1>
+          <p>
+            Enter the required biopsy and histopathological values below to
+            generate a cancer status and stage prediction.
+          </p>
+        </header>
 
-     <div class="breast-container">
-    <header class="breast-header">
-      <h1>Breast Cancer Prediction</h1>
-      <p>Enter Biopsy and Histopathological Features to predict breast cancer and its stage.</p>
-    </header>
-    <section>
-      <form action="/breast/predict" method="POST">
+        <section class="breast-overview">
+          <div class="overview-card">
+            <i class="fas fa-clipboard-list"></i>
+            <div>
+              <h2>What to Prepare</h2>
+              <p>Keep all 15 numeric feature values ready before starting the form.</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-ruler-combined"></i>
+            <div>
+              <h2>How to Enter Values</h2>
+              <p>Use decimal values where needed and follow the suggested ranges shown in each field.</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+              <h2>Important Note</h2>
+              <p>This tool supports screening workflows and should not replace professional medical advice.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="breast-form-section">
+          <div class="form-section-header">
+            <h2>Enter Clinical Features</h2>
+            <p>Fill in each field carefully to get the most reliable prediction from the trained model.</p>
+          </div>
+
+          <form action="/breast/predict" method="POST" class="breast-form">
         <div class="form-group">
           <label for="radius_mean">Radius Mean</label>
-          <input type="number" step="any" name="radius_mean" id="radius_mean" placeholder="Enter the mean radius value.(Range:6.98 - 28.11)" required>
-
+          <input type="number" step="any" name="radius_mean" id="radius_mean" placeholder="Enter the mean radius value" required>
+          <small class="field-hint">Suggested range: 6.98 to 28.11</small>
         </div>
 
         <div class="form-group">
           <label for="texture_mean">Texture Mean</label>
-          <input type="number" step="any" name="texture_mean" id="texture_mean" placeholder="Enter the Texture mean value.(Range:9.71 - 39.28)" required>
+          <input type="number" step="any" name="texture_mean" id="texture_mean" placeholder="Enter the texture mean value" required>
+          <small class="field-hint">Suggested range: 9.71 to 39.28</small>
         </div>
 
         <div class="form-group">
           <label for="perimeter_mean">Perimeter Mean</label>
-          <input type="number" step="any" name="perimeter_mean" id="perimeter_mean" placeholder=" Enter the Perimeter mean value. (Range: 43.79-188.5)" required>
+          <input type="number" step="any" name="perimeter_mean" id="perimeter_mean" placeholder="Enter the perimeter mean value" required>
+          <small class="field-hint">Suggested range: 43.79 to 188.5</small>
         </div>
 
         <div class="form-group">
           <label for="area_mean">Area Mean</label>
-          <input type="number" step="any" name="area_mean" id="area_mean" placeholder=" Enter the Area mean value. (Range: 143.5-2501.0)" required>
+          <input type="number" step="any" name="area_mean" id="area_mean" placeholder="Enter the area mean value" required>
+          <small class="field-hint">Suggested range: 143.5 to 2501.0</small>
         </div>
 
         <div class="form-group">
           <label for="smoothness_mean">Smoothness Mean</label>
-          <input type="number" step="any" name="smoothness_mean" id="smoothness_mean" placeholder=" Enter the Smoothness mean value. (Range: 0.052632-0.1634)" required>
+          <input type="number" step="any" name="smoothness_mean" id="smoothness_mean" placeholder="Enter the smoothness mean value" required>
+          <small class="field-hint">Suggested range: 0.052632 to 0.1634</small>
         </div>
 
         <div class="form-group">
           <label for="compactness_mean">Compactness Mean</label>
-          <input type="number" step="any" name="compactness_mean" id="compactness_mean" placeholder=" Enter the Compactness mean value. (Range: 0.01938-0.3454)" required>
+          <input type="number" step="any" name="compactness_mean" id="compactness_mean" placeholder="Enter the compactness mean value" required>
+          <small class="field-hint">Suggested range: 0.01938 to 0.3454</small>
         </div>
 
         <div class="form-group">
           <label for="concavity_mean">Concavity Mean</label>
-          <input type="number" step="any" name="concavity_mean" id="concavity_mean" placeholder=" Enter the Concavity mean value. (Range: 0.0-0.4268)" required>
+          <input type="number" step="any" name="concavity_mean" id="concavity_mean" placeholder="Enter the concavity mean value" required>
+          <small class="field-hint">Suggested range: 0.0 to 0.4268</small>
         </div>
 
         <div class="form-group">
           <label for="concave_points_mean">Concave Points Mean</label>
-          <input type="number" step="any" name="concave_points_mean" id="concave_points_mean" placeholder=" Enter the Concave Points mean value. (Range:0.0-0.2012)" required>
+          <input type="number" step="any" name="concave_points_mean" id="concave_points_mean" placeholder="Enter the concave points mean value" required>
+          <small class="field-hint">Suggested range: 0.0 to 0.2012</small>
         </div>
   
         <div class="form-group">
           <label for="symmetry_mean">Symmetry Mean</label>
-          <input type="number" step="any" name="symmetry_mean" id="symmetry_mean" placeholder=" Enter the Symmetry mean value. (Range: 0.106-0.304)" required>
+          <input type="number" step="any" name="symmetry_mean" id="symmetry_mean" placeholder="Enter the symmetry mean value" required>
+          <small class="field-hint">Suggested range: 0.106 to 0.304</small>
         </div>
 
         
         <div class="form-group">
-          <label for="radius_worst">Radius worst Mean</label>
-          <input type="number" step="any" name="radius_worst" id="radius_worst" placeholder=" Enter the Radius worst Mean value. (Range: 7.93-36.04)"  required>
+          <label for="radius_worst">Radius Worst Mean</label>
+          <input type="number" step="any" name="radius_worst" id="radius_worst" placeholder="Enter the radius worst mean value"  required>
+          <small class="field-hint">Suggested range: 7.93 to 36.04</small>
         </div>
 
         
         <div class="form-group">
-          <label for="texture_worst">Texture worst Mean</label>
-          <input type="number" step="any" name="texture_worst" id="texture_worst" placeholder=" Enter the Texture  worst Mean value. (Range: 12.02-49.54)"  required>
+          <label for="texture_worst">Texture Worst Mean</label>
+          <input type="number" step="any" name="texture_worst" id="texture_worst" placeholder="Enter the texture worst mean value"  required>
+          <small class="field-hint">Suggested range: 12.02 to 49.54</small>
         </div>
 
 
         <div class="form-group">
-          <label for="perimeter_worst">Perimeter worst Mean</label>
-          <input type="number" step="any" name="perimeter_worst" id="perimeter_worst" placeholder=" Enter the Perimeter worst Mean value. (Range: 50.41-251.2)"  required>
+          <label for="perimeter_worst">Perimeter Worst Mean</label>
+          <input type="number" step="any" name="perimeter_worst" id="perimeter_worst" placeholder="Enter the perimeter worst mean value"  required>
+          <small class="field-hint">Suggested range: 50.41 to 251.2</small>
         </div>
    
         <div class="form-group">
-          <label for="area_worst">Area worst Mean</label>
-          <input type="number" step="any" name="area_worst" id="area_worst" placeholder=" Enter the Area worst Mean value. (Range: 185.2-4254.0)"  required>
+          <label for="area_worst">Area Worst Mean</label>
+          <input type="number" step="any" name="area_worst" id="area_worst" placeholder="Enter the area worst mean value"  required>
+          <small class="field-hint">Suggested range: 185.2 to 4254.0</small>
         </div>
 
         <div class="form-group">
-          <label for="smoothness_worst">Smoothness worst Mean</label>
-          <input type="number" step="any" name="smoothness_worst" id="smoothness_worst" placeholder=" Enter the Smoothness worst Mean value. (Range: 0.07117-0.2226)"  required>
+          <label for="smoothness_worst">Smoothness Worst Mean</label>
+          <input type="number" step="any" name="smoothness_worst" id="smoothness_worst" placeholder="Enter the smoothness worst mean value"  required>
+          <small class="field-hint">Suggested range: 0.07117 to 0.2226</small>
         </div>
        
         <div class="form-group">
           <label for="compactness_worst">Compactness Worst Mean</label>
-          <input type="number" step="any" name="compactness_worst" id="compactness_worst" placeholder=" Enter the Compactness worst Mean value. (Range: 0.02729-1.058)"  required>
+          <input type="number" step="any" name="compactness_worst" id="compactness_worst" placeholder="Enter the compactness worst mean value"  required>
+          <small class="field-hint">Suggested range: 0.02729 to 1.058</small>
         </div>
         
         <div class="form-actions">
@@ -101,8 +148,10 @@
             <i class="fas fa-diagnoses"></i> Predict Cancer
           </button>
         </div>
-      </form>
-    </section>
+          </form>
+        </section>
+      </div>
+    </div>
 
     <script src="/static/js/scripts.js"></script>
   </body>

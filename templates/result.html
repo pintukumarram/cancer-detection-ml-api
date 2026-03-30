@@ -17,6 +17,12 @@
       <div class="result-card">
         <h1 class="result-heading">Cancer Prediction Result</h1>
         <div class="result-content">
+          {% if disease %}
+          <p>
+            <span class="label">Module:</span>
+            <span class="value">{{ disease }}</span>
+          </p>
+          {% endif %}
           <p>
             <span class="label">Cancer Status:</span>
             <span class="value">{{ cancer }}</span>

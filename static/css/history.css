@@ -1,0 +1,152 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #e9f1f5;
+  background:
+    radial-gradient(circle at top, rgba(14, 160, 197, 0.18), transparent 24%),
+    linear-gradient(180deg, #081018 0%, #0d1722 52%, #09111a 100%);
+}
+
+.history-page {
+  min-height: 100vh;
+  padding: 32px 18px;
+}
+
+.history-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px;
+  border-radius: 28px;
+  background: rgba(11, 18, 27, 0.88);
+  border: 1px solid rgba(113, 207, 224, 0.14);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.history-kicker {
+  margin: 0 0 0.6rem;
+  color: #8cf1ff;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.history-header h1 {
+  margin: 0 0 0.5rem;
+}
+
+.history-subtitle {
+  margin: 0;
+  color: #a7bac4;
+  line-height: 1.7;
+}
+
+.history-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.history-link {
+  padding: 0.8rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #f4fbff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.history-link-accent {
+  background: linear-gradient(135deg, #15d4dd, #0d98ca);
+  color: #041018;
+  font-weight: 700;
+}
+
+.history-table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+th {
+  color: #8cf1ff;
+  font-size: 0.9rem;
+}
+
+td {
+  color: #d5e2e8;
+}
+
+td pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "Consolas", "Courier New", monospace;
+  color: #a7bac4;
+}
+
+.empty-state {
+  padding: 36px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.empty-state h2 {
+  margin-top: 0;
+}
+
+.empty-state p {
+  margin-bottom: 0;
+  color: #a7bac4;
+}
+
+.notes-panel {
+  margin-top: 24px;
+}
+
+.note-entry {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 14px;
+}
+
+.note-entry h3 {
+  margin-top: 0;
+}
+
+.note-entry span {
+  color: #8fa6b2;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .history-header {
+    flex-direction: column;
+  }
+
+  .history-shell {
+    padding: 22px 18px;
+  }
+}

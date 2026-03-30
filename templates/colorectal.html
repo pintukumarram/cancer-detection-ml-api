@@ -1,36 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colorectal Cancer Prediction</title>
     <link rel="stylesheet" href="/static/css/colorectal.css">
-</head>
-<body>
-    <header>
-        <h1>Colorectal Cancer Prediction</h1>
-    </header>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="colorectal-page-shell">
+      <div class="colorectal-container">
+        <header class="colorectal-header">
+          <span class="colorectal-kicker">Colorectal Cancer Screening Module</span>
+          <h1>Colorectal Cancer Prediction</h1>
+          <p>
+            This page is prepared for a future colorectal prediction workflow.
+            The fields below reflect practical input ideas you can map to a
+            trained model later.
+          </p>
+        </header>
 
-    <main>
-        <form class="prediction-form" action="/predict_colorectal" method="POST">
-            <div class="form-group">
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age" placeholder="Enter your age" required>
+        <section class="colorectal-overview">
+          <div class="overview-card">
+            <i class="fas fa-user-md"></i>
+            <div>
+              <h2>Symptoms and Risk Factors</h2>
+              <p>Colorectal models often combine age, symptoms, and family history with a small set of measurements.</p>
             </div>
-            <div class="form-group">
-                <label for="weight">Weight (kg)</label>
-                <input type="number" id="weight" name="weight" placeholder="Enter your weight" required>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-clipboard-check"></i>
+            <div>
+              <h2>Binary Inputs Help</h2>
+              <p>Several screening questions can be encoded clearly as 1 for Yes and 0 for No.</p>
             </div>
-            <div class="form-group">
-                <label for="symptoms">Symptoms Description</label>
-                <input type="text" id="symptoms" name="symptoms" placeholder="Briefly describe your symptoms" required>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+              <h2>Planning Note</h2>
+              <p>These are front-end planning fields and should be finalized after your model feature list is confirmed.</p>
             </div>
-            <button type="submit" class="btn">Predict</button>
-        </form>
-    </main>
+          </div>
+        </section>
 
-    <footer>
-        <p>&copy; 2025 Cancer Prediction App. All Rights Reserved.</p>
-    </footer>
-</body>
+        <section class="colorectal-form-section">
+          <div class="form-section-header">
+            <h2>Suggested Screening Inputs</h2>
+            <p>These fields are good candidates if you train a colorectal risk or stage prediction model.</p>
+          </div>
+
+          <form class="colorectal-form prediction-form" action="/predict_colorectal" method="POST">
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input type="number" step="1" id="age" name="age" placeholder="Enter patient age" required>
+              <small class="field-hint">Age is commonly one of the strongest baseline predictors.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="bmi">BMI</label>
+              <input type="number" step="any" id="bmi" name="bmi" placeholder="Enter BMI" required>
+              <small class="field-hint">Useful if your model includes body composition or metabolic risk.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="rectal_bleeding">Rectal Bleeding</label>
+              <input type="number" step="1" min="0" max="1" id="rectal_bleeding" name="rectal_bleeding" placeholder="1 = Yes, 0 = No" required>
+              <small class="field-hint">Binary symptom indicator.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="bowel_habit_change">Change in Bowel Habits</label>
+              <input type="number" step="1" min="0" max="1" id="bowel_habit_change" name="bowel_habit_change" placeholder="1 = Yes, 0 = No" required>
+              <small class="field-hint">Binary symptom indicator.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="abdominal_pain">Abdominal Pain</label>
+              <input type="number" step="1" min="0" max="1" id="abdominal_pain" name="abdominal_pain" placeholder="1 = Yes, 0 = No" required>
+              <small class="field-hint">Binary symptom indicator.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="family_history_crc">Family History</label>
+              <input type="number" step="1" min="0" max="1" id="family_history_crc" name="family_history_crc" placeholder="1 = Yes, 0 = No" required>
+              <small class="field-hint">Binary indicator for family history of colorectal cancer.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="hemoglobin">Hemoglobin</label>
+              <input type="number" step="any" id="hemoglobin" name="hemoglobin" placeholder="Enter hemoglobin value" required>
+              <small class="field-hint">Optional lab-style feature often useful in screening contexts.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="cea_level">CEA Level</label>
+              <input type="number" step="any" id="cea_level" name="cea_level" placeholder="Enter CEA level" required>
+              <small class="field-hint">Tumor-marker style feature if included in your model design.</small>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn submit-button">
+                <i class="fas fa-diagnoses"></i> Predict Cancer
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+    <script src="/static/js/scripts.js"></script>
+  </body>
 </html>

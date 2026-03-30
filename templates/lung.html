@@ -11,13 +11,48 @@
     />
   </head>
   <body>
-    <div class="lung-container">
-      <header class="lung-header">
-        <h1>Lung Cancer Prediction</h1>
-        <p>Provide the details below to predict lung cancer and its stage.</p>
-      </header>
+    <div class="lung-page-shell">
+      <div class="lung-container">
+        <header class="lung-header">
+          <span class="lung-kicker">Lung Cancer Screening Module</span>
+          <h1>Lung Cancer Prediction</h1>
+          <p>
+            Answer the screening questions below using the expected numeric
+            format to predict lung cancer status and stage.
+          </p>
+        </header>
 
-      <form class="lung-form" action="/lung/predict" method="POST">
+        <section class="lung-overview">
+          <div class="overview-card">
+            <i class="fas fa-stethoscope"></i>
+            <div>
+              <h2>Quick Assessment</h2>
+              <p>This form uses simple symptom and lifestyle indicators to run the prediction model.</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-keyboard"></i>
+            <div>
+              <h2>How to Respond</h2>
+              <p>Enter <strong>1</strong> for Yes and <strong>0</strong> for No in every field.</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+              <h2>Important Note</h2>
+              <p>This tool supports screening workflows and should not replace professional medical evaluation.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="lung-form-section">
+          <div class="form-section-header">
+            <h2>Enter Screening Inputs</h2>
+            <p>Complete all five fields carefully to generate the prediction result.</p>
+          </div>
+
+          <form class="lung-form" action="/lung/predict" method="POST">
         <!-- Input Fields -->
         <div class="form-group">
           <label for="ALLERGY ">ALLERGY</label>
@@ -31,6 +66,7 @@
             required
             
           />
+          <small class="field-hint">Use 1 for Yes, 0 for No.</small>
         </div>
 
         <div class="form-group">
@@ -44,6 +80,7 @@
             max="1"
             required
           />
+          <small class="field-hint">Use 1 for Yes, 0 for No.</small>
         </div>
 
         <div class="form-group">
@@ -57,6 +94,7 @@
             max="1"
             required
           />
+          <small class="field-hint">Use 1 for Yes, 0 for No.</small>
         </div>
         <div class="form-group">
           <label for="swallowing_difficulty">Swallowing Difficulty</label>
@@ -69,6 +107,7 @@
             max="1"
             required
           />
+          <small class="field-hint">Use 1 for Yes, 0 for No.</small>
         </div>
         <div class="form-group">
           <label for="COUGHING">COUGHING</label>
@@ -81,6 +120,7 @@
             max="1"
             required
           />
+          <small class="field-hint">Use 1 for Yes, 0 for No.</small>
         </div>
         <!-- Submit Button -->
         <div class="form-actions">
@@ -88,7 +128,9 @@
             <i class="fas fa-diagnoses"></i> Predict Cancer
           </button>
         </div>
-      </form>
+          </form>
+        </section>
+      </div>
     </div>
     <script src="/static/js/scripts.js"></script>
   </body>
