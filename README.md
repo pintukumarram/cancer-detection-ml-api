@@ -1,5 +1,42 @@
 # KancerCare
 
+# Cancer Detection Platform (Flask + ML + RBAC)
+
+🚀 Live Demo: https://kancer-care.onrender.com/
+
+## 🔥 Overview
+This is a full-stack healthcare backend system that combines machine learning prediction with real-world clinical workflows.
+
+It supports multiple user roles (patients, doctors, lab experts) and provides real-time cancer prediction via backend routes.
+
+## 💡 What Makes This Project Different
+- Multi-role system (Patient, Doctor, Lab Expert)
+- ML-powered prediction APIs (~90% accuracy)
+- Patient history tracking and review workflow
+- Doctor/lab expert notes and clinical feedback system
+- Fully deployed on Render
+
+## 🔄 System Flow
+Patient → Prediction Module → Flask Backend → ML Model → Prediction → Stored in History → Doctor Review
+
+## 🔌 Key Backend Routes
+POST /breast/predict  
+POST /lung/predict  
+
+Returns:
+- Prediction result
+- Stored patient history
+- Accessible for doctor review
+
+## 🛠 Tech Stack
+- Python, Flask
+- Flask-Login (Auth)
+- SQLAlchemy (DB)
+- scikit-learn (ML)
+- SQLite (DB)
+- Render (Deployment)
+
+
 KancerCare is a Flask-based cancer screening and clinical tracking prototype that combines machine learning prediction modules with patient history, doctor/lab review, and role-based access control.
 
 The project has moved beyond a basic model demo and now behaves like an early-stage healthcare product prototype: patients can register, log in, use prediction modules, and review saved history, while doctors and lab experts can review patient records and add remarks, suggestions, and prescription-style notes.
