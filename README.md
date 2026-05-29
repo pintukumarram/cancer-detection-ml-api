@@ -1,4 +1,12 @@
 # KancerCare
+<img width="1884" height="971" alt="image" src="https://github.com/user-attachments/assets/63f6a442-0702-4bbd-b61b-5b05cab10e77" />
+<img width="1897" height="862" alt="image" src="https://github.com/user-attachments/assets/c05558d5-efe8-43b2-8f26-5643ded8b955" />
+<img width="1864" height="960" alt="image" src="https://github.com/user-attachments/assets/1ae23fdd-59ac-4d5d-b892-f7e0a65db54a" />
+<img width="1910" height="895" alt="image" src="https://github.com/user-attachments/assets/9a0b5fca-5437-4171-be7e-ba2c90c18b26" />
+
+
+
+
 
 KancerCare is a Flask-based cancer screening and clinical tracking prototype that combines machine learning prediction modules with patient history, doctor/lab review, and role-based access control.
 
